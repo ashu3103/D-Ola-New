@@ -64,8 +64,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           children: [
                             Text('Email',
                                 style: TextStyle(
+                                    color: Colors.grey[700],
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0)),
+                            SizedBox(height: 10.0),
                             TextField(
                               onChanged: (val) {
                                 email = val;
@@ -73,18 +75,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   validateForm();
                                 });
                               },
-                              cursorColor: Colors.black,
+                              cursorColor: Colors.grey[700],
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey[700],
                                   fontWeight: FontWeight.bold),
                               decoration: customBoxStyle.copyWith(
-                                  hintText: 'Enter your e-mail id'),
+                                  hintText: 'Enter your e-mail id',
+                                  hintStyle: TextStyle(fontSize: 15)),
                             ),
                             const SizedBox(height: 15.0),
                             Text('Password',
                                 style: TextStyle(
+                                    color: Colors.grey[700],
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0)),
+                            SizedBox(height: 10.0),
                             TextField(
                               onChanged: (val) {
                                 password = val;
@@ -92,9 +97,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   validateForm();
                                 });
                               },
-                              cursorColor: Colors.black,
+                              cursorColor: Colors.grey[700],
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey[700],
                                   fontWeight: FontWeight.bold),
                               obscureText: signupObscure,
                               decoration: customBoxStyle.copyWith(
@@ -109,7 +114,32 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       });
                                     },
                                   ),
-                                  hintText: 'Minimum 6 characters requires'),
+                                  hintText: 'Minimum 6 characters requires',
+                                  hintStyle: TextStyle(fontSize: 15)),
+                            ),
+                            SizedBox(height: 15.0),
+                            
+                            Text('Phone Number',
+                                style: TextStyle(
+                                  color:Colors.grey[700],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0)),
+                            SizedBox(height: 10.0),
+                            TextField(
+                              onChanged: (val) {
+                                phoneno = val;
+                                setState(() {
+                                  validateForm();
+                                });
+                              },
+                              cursorColor: Colors.grey[700],
+                              style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold),
+                              obscureText: signupObscure,
+                              decoration: customBoxStyle.copyWith(
+                                  hintText: 'Enter your phone number',
+                                  hintStyle: TextStyle(fontSize: 15)),
                             ),
                             SizedBox(height: 15.0),
                             Column(
@@ -119,11 +149,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   title: const Text('Rider'),
                                   leading: Radio(
                                     value: "Rider",
-                                    groupValue: "Role",
-                                    focusColor: Colors.blue,
+                                    groupValue: role,
+                                    activeColor: Color.fromRGBO(255, 114, 94, 1),
                                     onChanged: (value) {
                                       setState(() {
-                                        role = value as String;
+                                        role = value.toString();
                                         show = false;
                                       });
                                     },
@@ -133,10 +163,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   title: const Text('Driver'),
                                   leading: Radio(
                                     value: "Driver",
-                                    groupValue: "Role",
+                                    groupValue:role,
+                                    activeColor: Color.fromRGBO(255, 114, 94, 1),
                                     onChanged: (value) {
                                       setState(() {
-                                        role = value as String;
+                                        role = value.toString();
                                         show = true;
                                       });
                                     },
@@ -144,12 +175,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 15.0),
                             if (show)
                               Text('Public Key of Driver',
                                   style: TextStyle(
+                                      color: Colors.grey[700],
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16.0)),
+                            if (show) SizedBox(height: 10.0),
                             if (show)
                               TextField(
                                 onChanged: (val) {
@@ -158,9 +190,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     validateForm();
                                   });
                                 },
-                                cursorColor: Colors.black,
+                                cursorColor: Colors.grey[700],
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.grey[700],
                                     fontWeight: FontWeight.bold),
                                 obscureText: signupObscure,
                                 decoration: customBoxStyle.copyWith(
@@ -175,28 +207,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         });
                                       },
                                     ),
-                                    hintText: 'Minimum 6 characters requires'),
+                                    hintText: 'Minimum 6 characters requires',
+                                    hintStyle: TextStyle(fontSize: 15)),
                               ),
-                            if (show) SizedBox(height: 15.0),
-                            Text('Phone Number',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0)),
-                            TextField(
-                              onChanged: (val) {
-                                phoneno = val;
-                                setState(() {
-                                  validateForm();
-                                });
-                              },
-                              cursorColor: Colors.black,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                              obscureText: signupObscure,
-                              decoration: customBoxStyle.copyWith(
-                                  hintText: 'Enter your phone number'),
-                            ),
+                            
+                            SizedBox(height: 10),
                             Center(
                                 child: Padding(
                               padding:
@@ -211,9 +226,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       final newUser = await auth
                                           .createUserWithEmailAndPassword(
                                               email: email, password: password);
-                                              print(newUser);
-                                              print("[swddd]");
-                                              print(password);
+                                      print(newUser);
+                                      print(password);
                                       if (newUser != null) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -250,7 +264,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     child: Text(
                                       'Register',
                                       style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w700),
                                       textAlign: TextAlign.center,
                                     )),

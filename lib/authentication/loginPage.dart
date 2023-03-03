@@ -32,33 +32,35 @@ class _LoginPageState extends State<LoginPage> {
                 HeadClipper(),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                      EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*.05, vertical: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Username',
+                      Text('Email',
                           style: TextStyle(
+                            color: Color.fromRGBO(94, 90, 90, 1),
                               fontWeight: FontWeight.bold, fontSize: 16.0)),
                       SizedBox(height: 10.0),
                       TextField(
                         onChanged: (val) {
                           username = val;
                         },
-                        cursorColor: Colors.black,
+                        cursorColor: Color.fromARGB(255, 92, 90, 90),
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
+                            color: Color.fromARGB(255, 92, 90, 90), fontWeight: FontWeight.bold),
                         decoration: customBoxStyle,
                       ),
                       SizedBox(height: 25.0),
                       Text('Password',
                           style: TextStyle(
+                            color: Color.fromRGBO(94, 90, 90, 1),
                               fontWeight: FontWeight.bold, fontSize: 16.0)),
                       SizedBox(height: 10.0),
                       TextField(
                         onChanged: (val) {
                           password = val;
                         },
-                        cursorColor: Colors.black,
+                        cursorColor: Color.fromRGBO(94, 90, 90, 1),
                         obscureText: loginObscure,
                         decoration: customBoxStyle.copyWith(
                           suffixIcon: IconButton(
@@ -77,54 +79,67 @@ class _LoginPageState extends State<LoginPage> {
                           visible: invalidCredentials,
                           child: Center(
                               child: Text(
-                                  'Invalid Username or password entered',
+                                  'Invalid Email or password entered',
                                   style: TextStyle(color: Colors.red)))),
                       SizedBox(height: 35.0),
-                      GestureDetector(
-                        onTap: () async {
-                          setState(() {
-                            showpinner = true;
-                          });
-                          try {
-                            final user = await auth.signInWithEmailAndPassword(
-                                email: username, password: password);
-                            if (user != null) {
-                              setState(() {
-                                showpinner = false;
-                                invalidCredentials = false;
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Logged In!')),
-                              );
-                              Navigator.pushNamed(context, '/home');
-                            }
-                          } catch (e) {
+                      Center(
+                          child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
                             setState(() {
-                              invalidCredentials = true;
-                              showpinner = false;
+                              showpinner = true;
                             });
-                            print(e);
-                          }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          margin: EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Text('Login',
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.white)),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 114, 94, 1),
-                          ),
+                            try {
+                              final user =
+                                  await auth.signInWithEmailAndPassword(
+                                      email: username, password: password);
+                              if (user != null) {
+                                setState(() {
+                                  showpinner = false;
+                                  invalidCredentials = false;
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Logged In!')),
+                                );
+                                Navigator.pushNamed(context, '/home');
+                              }
+                            } catch (e) {
+                              setState(() {
+                                invalidCredentials = true;
+                                showpinner = false;
+                              });
+                              print(e);
+                            }
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  const MaterialStatePropertyAll<Color>(
+                                Color.fromRGBO(255, 114, 94, 1),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ))),
+                          child: Container(
+                              padding: const EdgeInsets.all(12),
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w700),
+                                textAlign: TextAlign.center,
+                              )),
                         ),
-                      ),
+                      )),
                       SizedBox(height: 5.0),
                       Container(
                         alignment: Alignment.centerRight,
                         margin: EdgeInsets.only(right: 15.0),
                         child: Text('Forgot Password?',
                             style: TextStyle(
+                                color:Colors.grey[700],
                                 fontSize: 15.0, fontWeight: FontWeight.bold)),
                       ),
                       SizedBox(height: 40.0),
@@ -132,12 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text('Don\'t have an account ?  ',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                              style: TextStyle(  color:Colors.grey[700], fontSize:15,fontWeight: FontWeight.bold)),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            child: Text('Register',
+                            child: const Text('Register',
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 114, 94, 1),
                                     fontWeight: FontWeight.bold)),
