@@ -1,6 +1,6 @@
 {
-    "name": "mapbox_turn_by_turn",
-    "short_name": "mapbox_turn_by_turn",
+    "name": "dola",
+    "short_name": "dola",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

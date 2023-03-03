@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:mapbox_turn_by_turn/helpers/mapbox_handler.dart';
-import 'package:mapbox_turn_by_turn/helpers/shared_prefs.dart';
+import 'package:dola/helpers/mapbox_handler.dart';
+import 'package:dola/helpers/shared_prefs.dart';
 
 import '../helpers/commons.dart';
 import '../widgets/review_ride_bottom_sheet.dart';

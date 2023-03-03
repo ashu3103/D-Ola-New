@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mapbox_turn_by_turn/widgets/endpoints_card.dart';
-import 'package:mapbox_turn_by_turn/widgets/search_listview.dart';
+import 'package:dola/widgets/endpoints_card.dart';
+import 'package:dola/widgets/search_listview.dart';
 
 import '../widgets/review_ride_fa_button.dart';
 

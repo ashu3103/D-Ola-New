@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:mapbox_turn_by_turn/screens/prepare_ride.dart';
+import 'package:dola/screens/prepare_ride.dart';
 
 import '../helpers/mapbox_handler.dart';
 import '../helpers/shared_prefs.dart';

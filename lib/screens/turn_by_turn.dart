@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mapbox_navigation/library.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:mapbox_turn_by_turn/helpers/shared_prefs.dart';
-import 'package:mapbox_turn_by_turn/ui/rate_ride.dart';
+import 'package:dola/helpers/shared_prefs.dart';
+import 'package:dola/ui/rate_ride.dart';
 
 class TurnByTurn extends StatefulWidget {
   const TurnByTurn({Key? key}) : super(key: key);

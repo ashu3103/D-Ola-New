@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(mapbox_turn_by_turn LANGUAGES CXX)
+project(dola LANGUAGES CXX)
 
-set(BINARY_NAME "mapbox_turn_by_turn")
+set(BINARY_NAME "dola")
 
 cmake_policy(SET CMP0063 NEW)
 

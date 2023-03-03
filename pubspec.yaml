@@ -1,4 +1,4 @@
-name: mapbox_turn_by_turn
+name: dola
 description: A new Flutter project.
 
 publish_to: "none"
@@ -21,6 +21,10 @@ dependencies:
   mapbox_gl: ^0.15.0
   intl: ^0.17.0
   flutter_rating_bar: ^4.0.0
+  firebase_core: ^2.7.0
+  flutter_custom_clippers: ^2.1.0
+  modal_progress_hud_nsn: ^0.3.0
+  firebase_auth: ^4.2.9
 
 dev_dependencies:
   flutter_test:

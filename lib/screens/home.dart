@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:mapbox_turn_by_turn/helpers/shared_prefs.dart';
-import 'package:mapbox_turn_by_turn/screens/prepare_ride.dart';
+import 'package:dola/helpers/shared_prefs.dart';
+import 'package:dola/screens/prepare_ride.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

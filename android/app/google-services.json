@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "974569926830",
+    "project_id": "d-ola-cb33f",
+    "storage_bucket": "d-ola-cb33f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974569926830:android:44a9fec08d8c2a73d23d3f",
+        "android_client_info": {
+          "package_name": "com.example.dola"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974569926830-q0b6cgud4euk9078ead2dhc8g3j29th6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2mJIiRWY-2Gz4Q_z2dZ_XgaoPK-MSO2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974569926830-q0b6cgud4euk9078ead2dhc8g3j29th6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "974569926830-iof7jaiae9230o55o2bpsqk0aacs33up.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.dola"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import '../helpers/mapbox_handler.dart';
 import '../main.dart';
 import '../screens/home.dart';
+import '../authentication/homePage.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class _SplashState extends State<Splash> {
     sharedPreferences.setString('current-address', currentAddress);
 
     Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (_) => const Home()), (route) => false);
+        MaterialPageRoute(builder: (_) => const HomePage()), (route) => false);
   }
 
   @override
