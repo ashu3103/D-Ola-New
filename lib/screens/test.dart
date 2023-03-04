@@ -72,12 +72,7 @@ class _TestPageState extends State<TestPage> {
                 },
                 child: Text('Get Ride Status')
             ),
-            ElevatedButton(
-                onPressed: (){
-                  payFare('s@gmail.com', '867cc6e7a38475a92ab406d4e59113f80c5a2b1ad654e0f7a4f7f80fcec7ff72', 0, ethClient);
-                },
-                child: Text('Pay Fare')
-            )
+            //
           ],
         ),
       ),

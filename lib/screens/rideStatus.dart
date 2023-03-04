@@ -152,8 +152,14 @@ class _RideStatusState extends State<RideStatus> {
             if (started) SizedBox(height: 25),
             if (started)
               ElevatedButton(
-                  onPressed: started == true ? () { 
+                  onPressed: started == true ? () async { 
                       // call pay function...
+                      final FirebaseAuth auth = await FirebaseAuth.instance;
+                      dynamic riderEmail = auth.currentUser!.email;
+                      dynamic _rider = await getRider(riderEmail, widget.ethClient);
+                      dynamic _ride = await getOngoingRide(riderEmail, widget.ethClient);
+                      print(_ride[0][2].runtimeType);
+                      await payFare(riderEmail, _rider[0][4], _ride[0][2], widget.ethClient);
                       Navigator.push(context,
                       MaterialPageRoute(builder: (_) => PrepareRide(ethClient: widget.ethClient)));
                     } : null,
