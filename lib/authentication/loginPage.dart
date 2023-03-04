@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:dola/utils/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:web3dart/web3dart.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const LoginPage({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -108,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const Home(role:"Driver")),
+                                          Home(role:"Rider", ethClient: widget.ethClient)),
                                 );
                               }
                             } catch (e) {
@@ -161,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const RegistrationPage()),
+                                          RegistrationPage(ethClient: widget.ethClient,)),
                                 );
                             },
                             child:  Text('Register',

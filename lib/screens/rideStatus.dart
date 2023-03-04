@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
 import 'package:dola/screens/prepare_ride.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:dola/services/functions.dart';
 
 class RideStatus extends StatefulWidget {
-  const RideStatus({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const RideStatus({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   State<RideStatus> createState() => _RideStatusState();
@@ -15,9 +20,9 @@ class _RideStatusState extends State<RideStatus> {
   LatLng currentLocation = getCurrentLatLngFromSharedPrefs();
   late String currentAddress;
   late CameraPosition _initialCameraPosition;
-  bool isAccepted = true;
+  bool isAccepted = false;
   bool started = false;
-  bool completed = true;
+  bool completed = false;
 
   @override
   void initState() {
@@ -31,7 +36,25 @@ class _RideStatusState extends State<RideStatus> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Ride Status")),
+        appBar: AppBar(
+          title: Text("Ride Status"),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                final FirebaseAuth auth = FirebaseAuth.instance;
+                dynamic email = auth.currentUser!.email;
+                dynamic list = await getRideStatus(email, widget.ethClient);
+                print(list);
+                setState(() {
+                  isAccepted = list[0];
+                  started = list[1];
+                  completed = list[2];
+                });
+              }, 
+              icon: Icon(Icons.refresh)
+              )
+          ],
+          ),
         body: Column(
           children: [
             // MapboxMap(
@@ -52,10 +75,8 @@ class _RideStatusState extends State<RideStatus> {
                       children: [
                         IntrinsicHeight(
                             child: Row(children: [
-                          if (!isAccepted)
                             Icon(Icons.check_circle_outline_outlined,
                                 color: Colors.green),
-                          if (isAccepted) Icon(Icons.circle_outlined),
                           SizedBox(width: 10),
                           const Text(
                             'Looking for Cab',
@@ -110,29 +131,32 @@ class _RideStatusState extends State<RideStatus> {
                             height: 80,
                             child:
                                 VerticalDivider(width: 2, color: Colors.grey)),
-                        IntrinsicHeight(
-                            child: Row(children: [
-                          if (completed)
-                            Icon(Icons.check_circle_outline_outlined,
-                                color: Colors.green),
-                          if(!completed)Icon(Icons.circle_outlined),
-                          SizedBox(width: 10),
-                          const Text(
-                            'Dropped Off',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 103, 102, 102),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ])),
+                        // IntrinsicHeight(
+                        //     child: Row(children: [
+                        //   if (completed)
+                        //     Icon(Icons.check_circle_outline_outlined,
+                        //         color: Colors.green),
+                        //   if(!completed)Icon(Icons.circle_outlined),
+                        //   SizedBox(width: 10),
+                        //   const Text(
+                        //     'Dropped Off',
+                        //     style: TextStyle(
+                        //         color: Color.fromARGB(255, 103, 102, 102),
+                        //         fontSize: 18,
+                        //         fontWeight: FontWeight.bold),
+                        //   )
+                        // ])),
                       ]),
                 ),
             ),
-            if (completed) SizedBox(height: 25),
-            if (completed)
+            if (started) SizedBox(height: 25),
+            if (started)
               ElevatedButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const PrepareRide())),
+                  onPressed: started == true ? () { 
+                      // call pay function...
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => PrepareRide(ethClient: widget.ethClient)));
+                    } : null,
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[900]!,
                       padding: const EdgeInsets.all(20)),

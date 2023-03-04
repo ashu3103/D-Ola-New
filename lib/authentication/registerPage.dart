@@ -1,14 +1,15 @@
-// import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dola/utils/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:dola/authentication/homePage.dart';
+import 'package:dola/screens/home.dart';
+import 'package:dola/services/functions.dart';
+import 'package:web3dart/web3dart.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const RegistrationPage({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
@@ -16,26 +17,27 @@ class RegistrationPage extends StatefulWidget {
 
 String email = '';
 String password = '';
-String phoneno = '';
 String role = '';
 bool show = false;
 String public_key_driver = '';
+String privateKey = '';
 bool formCompleted = false;
 String phone = '';
+String name = '';
 FirebaseAuth auth = FirebaseAuth.instance;
+
 
 class _RegistrationPageState extends State<RegistrationPage> {
   void validateForm() {
     if (email.length != 0 &&
         password.length > 5 &&
-        phone.length != 10 &&
+        phone.length == 10 &&
         (role == 'Rider' || (role == 'Driver' && public_key_driver != ''))) {
       formCompleted = true;
     } else {
       formCompleted = false;
     }
   }
-
   bool signupObscure = true;
   // FirebaseAuth _auth = FirebaseAuth.instance;
   bool showSpinner = false;
@@ -63,6 +65,29 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 15.0),
+                            Text('Name',
+                                style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0)),
+                            SizedBox(height: 15.0),
+                            TextField(
+                              onChanged: (val) {
+                                name = val;
+                                setState(() {
+                                  validateForm();
+                                });
+                              },
+                              cursorColor: Colors.grey[700],
+                              style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold),
+                              decoration: customBoxStyle.copyWith(
+                                  hintText: 'Enter your name',
+                                  hintStyle: TextStyle(fontSize: 15)),
+                            ),
+                            SizedBox(height: 15.0),
                             Text('Email',
                                 style: TextStyle(
                                     color: Colors.grey[700],
@@ -119,16 +144,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   hintStyle: TextStyle(fontSize: 15)),
                             ),
                             SizedBox(height: 15.0),
-                            
                             Text('Phone Number',
                                 style: TextStyle(
-                                  color:Colors.grey[700],
+                                    color: Colors.grey[700],
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16.0)),
                             SizedBox(height: 10.0),
                             TextField(
                               onChanged: (val) {
-                                phoneno = val;
+                                phone = val;
                                 setState(() {
                                   validateForm();
                                 });
@@ -137,9 +161,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               style: TextStyle(
                                   color: Colors.grey[700],
                                   fontWeight: FontWeight.bold),
-                              obscureText: signupObscure,
                               decoration: customBoxStyle.copyWith(
                                   hintText: 'Enter your phone number',
+                                  hintStyle: TextStyle(fontSize: 15)),
+                            ),
+                            SizedBox(height: 15.0),
+                            Text('Private Key',
+                                style: TextStyle(
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0)),
+                            SizedBox(height: 15.0),
+                            TextField(
+                              onChanged: (val) {
+                                privateKey = val;
+                                setState(() {
+                                  validateForm();
+                                });
+                              },
+                              cursorColor: Colors.grey[700],
+                              style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.bold),
+                              decoration: customBoxStyle.copyWith(
+                                  hintText: 'Enter your private key',
                                   hintStyle: TextStyle(fontSize: 15)),
                             ),
                             SizedBox(height: 15.0),
@@ -156,6 +201,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       setState(() {
                                         role = value.toString();
                                         show = false;
+                                        validateForm();
                                       });
                                     },
                                   ),
@@ -164,12 +210,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   title: const Text('Driver'),
                                   leading: Radio(
                                     value: "Driver",
-                                    groupValue:role,
+                                    groupValue: role,
                                     activeColor: Colors.blue[900]!,
                                     onChanged: (value) {
                                       setState(() {
                                         role = value.toString();
                                         show = true;
+                                        validateForm();
                                       });
                                     },
                                   ),
@@ -186,7 +233,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             if (show)
                               TextField(
                                 onChanged: (val) {
-                                  password = val;
+                                  public_key_driver = val;
                                   setState(() {
                                     validateForm();
                                   });
@@ -196,22 +243,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     color: Colors.grey[700],
                                     fontWeight: FontWeight.bold),
                                 obscureText: signupObscure,
-                                decoration: customBoxStyle.copyWith(
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.remove_red_eye,
-                                          color: Colors.grey),
-                                      onPressed: () {
-                                        setState(() {
-                                          signupObscure = signupObscure == true
-                                              ? false
-                                              : true;
-                                        });
-                                      },
-                                    ),
-                                    hintText: 'Minimum 6 characters requires',
-                                    hintStyle: TextStyle(fontSize: 15)),
                               ),
-                            
                             SizedBox(height: 10),
                             Center(
                                 child: Padding(
@@ -223,7 +255,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     setState(() {
                                       showSpinner = true;
                                     });
+                                    // print('btn is being pressed');
                                     try {
+                                      if(role == 'Rider'){
+                                        await registerRider(name, phone, email, privateKey, widget.ethClient);
+                                      }else{
+                                        await registerDriver(public_key_driver, name, phone, email, privateKey, widget.ethClient);
+                                      }
                                       final newUser = await auth
                                           .createUserWithEmailAndPassword(
                                               email: email, password: password);
@@ -237,11 +275,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                                   'Registered Successfully!')),
                                         );
                                         Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          HomePage()),
-                                );
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Home(role: role, ethClient: widget.ethClient)),
+                                        );
                                         setState(() {
                                           showSpinner = false;
                                         });
@@ -250,12 +287,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                       print(e);
                                     }
                                   } else {
-                                    null;
+                                    print('form is not completed');
                                   }
                                 },
                                 style: ButtonStyle(
                                     backgroundColor:
-                                       MaterialStatePropertyAll<Color>(
+                                        MaterialStatePropertyAll<Color>(
                                       Colors.blue[900]!,
                                     ),
                                     shape: MaterialStateProperty.all<

@@ -1,16 +1,19 @@
 import 'package:dola/screens/rideStatus.dart';
 import 'package:flutter/material.dart';
-
+import 'package:web3dart/web3dart.dart';
 import '../helpers/shared_prefs.dart';
 import '../screens/turn_by_turn.dart';
+import 'package:dola/services/functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Widget reviewRideBottomSheet(
-    BuildContext context, String distance, String dropOffTime) {
+    BuildContext context, String distance, String dropOffTime, Web3Client ethClient) {
   String sourceAddress = getSourceAndDestinationPlaceText('source');
   String destinationAddress = getSourceAndDestinationPlaceText('destination');
   print("dist");
   print(distance);
   print(double.parse(distance));
+  int passDistance = double.parse(distance).round();
   String fare=(double.parse(distance)*8).toString();
   print(fare);
 
@@ -49,8 +52,15 @@ Widget reviewRideBottomSheet(
                   ),
                 ),
                 ElevatedButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const RideStatus())),
+                    onPressed: () async {
+                      final FirebaseAuth auth = FirebaseAuth.instance;
+                      String? email = auth.currentUser!.email;  
+                      dynamic l = await getRider(email!, ethClient);
+                      print(l[0][4]);
+                      await createRideRequest(sourceAddress, destinationAddress, DateTime.now().toString(), email,passDistance, l[0][4], ethClient);
+                      Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => RideStatus(ethClient: ethClient)));
+                      },
                     style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(20)),
                     child: Row(

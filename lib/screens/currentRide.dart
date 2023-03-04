@@ -1,20 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:dola/services/functions.dart';
 
 class CurrentRide extends StatefulWidget {
+    final Web3Client ethClient;
   const CurrentRide(
-      {Key? key, required this.riderAdd, required this.destination})
+      {Key? key, required this.fare, required this.riderAdd, required this.destination, required this.ethClient})
       : super(key: key);
   final String riderAdd;
   final String destination;
+  final String fare;
   @override
   State<CurrentRide> createState() => _CurrentRideState();
 }
 
 class _CurrentRideState extends State<CurrentRide> {
-  String source = "Delhi";
+  // String source = widget.riderAdd;
   String destination = "Mumbai";
   String fare = "100";
   String date = "1/1/23";
@@ -59,13 +65,13 @@ class _CurrentRideState extends State<CurrentRide> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                      Text("Source: $source",
+                      Text("Source: ${widget.riderAdd}",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text("Fare: ",
+                      Text("Fare: ${widget.fare.toString()}",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text("Destination: $destination",
+                      Text("Destination: ${widget.destination}",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
                       Row(
@@ -84,6 +90,10 @@ class _CurrentRideState extends State<CurrentRide> {
                               setState(() {
                                 pickedUp = true;
                               });
+                              final FirebaseAuth auth = FirebaseAuth.instance;
+                              dynamic email = auth.currentUser!.email;
+                              dynamic l = await getDriver(email, widget.ethClient);
+                              await pickUp(email, l[0][6]  ,widget.ethClient);
                             },
                             style: ButtonStyle(
                                 backgroundColor:
@@ -108,44 +118,44 @@ class _CurrentRideState extends State<CurrentRide> {
                           ),
                         ),
                       ]),
-                      Row(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                        if (droppedOff)
-                          Icon(Icons.check_circle_outline_outlined,
-                              color: Colors.green),
-                       Container(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              setState(() {
-                                droppedOff = true;
-                              });
-                            },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                  Colors.blue[900]!,
-                                ),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ))),
-                            child: Container(
-                                padding: const EdgeInsets.all(12),
-                                // width: MediaQuery.of(context).size.width * 0.,
-                                child: Text(
-                                  'Dropped Off',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                  textAlign: TextAlign.center,
-                                )),
-                          ),
-                        ),
-                      ])
+                      // Row(
+                      //    crossAxisAlignment: CrossAxisAlignment.center,
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //   if (droppedOff)
+                      //     Icon(Icons.check_circle_outline_outlined,
+                      //         color: Colors.green),
+                      //  Container(
+                      //     padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      //     child: ElevatedButton(
+                      //       onPressed: () async {
+                      //         setState(() {
+                      //           droppedOff = true;
+                      //         });
+                      //       },
+                      //       style: ButtonStyle(
+                      //           backgroundColor:
+                      //               MaterialStatePropertyAll<Color>(
+                      //             Colors.blue[900]!,
+                      //           ),
+                      //           shape: MaterialStateProperty.all<
+                      //                   RoundedRectangleBorder>(
+                      //               RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(20.0),
+                      //           ))),
+                      //       child: Container(
+                      //           padding: const EdgeInsets.all(12),
+                      //           // width: MediaQuery.of(context).size.width * 0.,
+                      //           child: Text(
+                      //             'Dropped Off',
+                      //             style: TextStyle(
+                      //                 fontSize: 12,
+                      //                 fontWeight: FontWeight.w600),
+                      //             textAlign: TextAlign.center,
+                      //           )),
+                      //     ),
+                      //   ),
+                      // ])
                     ]))),
           
           ])),

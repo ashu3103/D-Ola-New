@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../screens/home.dart';
 
 class RateRide extends StatelessWidget {
-  const RateRide({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const RateRide({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class RateRide extends StatelessWidget {
       ),
       ElevatedButton(
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const Home(role:"Driver"))),
+              context, MaterialPageRoute(builder: (_) => Home(role:"Driver", ethClient: ethClient,))),
           child: const Text('Start another ride'))
     ]));
   }

@@ -12,6 +12,7 @@ import 'authentication/registerPage.dart';
 import 'screens/home.dart';
 import 'screens/prepare_ride.dart';
 import 'ui/splash.dart';
+import 'screens/test.dart';
 
 late SharedPreferences sharedPreferences;
 

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dola/widgets/endpoints_card.dart';
 import 'package:dola/widgets/search_listview.dart';
-
+import 'package:web3dart/web3dart.dart';
 import '../widgets/review_ride_fa_button.dart';
 
 class PrepareRide extends StatefulWidget {
-  const PrepareRide({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const PrepareRide({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   State<PrepareRide> createState() => _PrepareRideState();
@@ -90,7 +91,7 @@ class _PrepareRideState extends State<PrepareRide> {
           ),
         ),
       ),
-      floatingActionButton: reviewRideFaButton(context),
+      floatingActionButton: reviewRideFaButton(context, widget.ethClient),
     );
   }
 }

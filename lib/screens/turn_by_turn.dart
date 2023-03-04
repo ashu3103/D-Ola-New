@@ -3,9 +3,11 @@ import 'package:flutter_mapbox_navigation/library.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
 import 'package:dola/ui/rate_ride.dart';
+import 'package:web3dart/web3dart.dart';
 
 class TurnByTurn extends StatefulWidget {
-  const TurnByTurn({Key? key}) : super(key: key);
+  final Web3Client ethClient;
+  const TurnByTurn({Key? key, required this.ethClient}) : super(key: key);
 
   @override
   State<TurnByTurn> createState() => _TurnByTurnState();
@@ -66,7 +68,7 @@ class _TurnByTurnState extends State<TurnByTurn> {
 
   @override
   Widget build(BuildContext context) {
-    return const RateRide();
+    return RateRide(ethClient: widget.ethClient,);
   }
 
   Future<void> _onRouteEvent(e) async {

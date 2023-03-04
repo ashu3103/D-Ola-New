@@ -1,6 +1,13 @@
+import 'dart:io';
+
 import 'package:dola/authentication/loginPage.dart';
 import 'package:dola/authentication/registerPage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:web3dart/web3dart.dart';
+import 'package:dola/utils/constants.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,7 +17,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
-
+  Client? httpClient;
+  Web3Client? ethClient;
+  @override
+  void initState() {
+    super.initState();
+    httpClient = Client();
+    ethClient = Web3Client(infure_url, httpClient!);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +65,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const LoginPage()),
+                                          LoginPage(ethClient: ethClient!,)),
                                 );
                     },
                     style: ButtonStyle(
@@ -83,7 +97,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const RegistrationPage()),
+                                        RegistrationPage(ethClient: ethClient!)),
                                 );
                     },
                     style: ButtonStyle(

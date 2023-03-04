@@ -3,13 +3,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/mapbox_handler.dart';
 import 'package:dola/helpers/shared_prefs.dart';
+import 'package:web3dart/web3dart.dart';
 
 import '../helpers/commons.dart';
 import '../widgets/review_ride_bottom_sheet.dart';
 
 class ReviewRide extends StatefulWidget {
   final Map modifiedResponse;
-  const ReviewRide({Key? key, required this.modifiedResponse})
+  final Web3Client ethClient;
+  const ReviewRide({Key? key, required this.modifiedResponse, required this.ethClient})
       : super(key: key);
 
   @override
@@ -122,7 +124,7 @@ class _ReviewRideState extends State<ReviewRide> {
                 minMaxZoomPreference: const MinMaxZoomPreference(11, 11),
               ),
             ),
-            reviewRideBottomSheet(context, distance, dropOffTime),
+            reviewRideBottomSheet(context, distance, dropOffTime, widget.ethClient),
           ],
         ),
       ),

@@ -25,6 +25,8 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   modal_progress_hud_nsn: ^0.3.0
   firebase_auth: ^4.2.9
+  http: ^0.13.5
+  web3dart: ^2.6.1
 
 dev_dependencies:
   flutter_test:
@@ -46,3 +48,4 @@ flutter:
     - assets/icon/
     - assets/image/
     - assets/config/
+    - assets/abi.json
