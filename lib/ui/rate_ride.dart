@@ -33,7 +33,7 @@ class RateRide extends StatelessWidget {
       ),
       ElevatedButton(
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const Home())),
+              context, MaterialPageRoute(builder: (_) => const Home(role:"Driver"))),
           child: const Text('Start another ride'))
     ]));
   }

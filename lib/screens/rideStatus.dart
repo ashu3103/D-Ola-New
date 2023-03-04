@@ -134,7 +134,7 @@ class _RideStatusState extends State<RideStatus> {
                   onPressed: () => Navigator.push(context,
                       MaterialPageRoute(builder: (_) => const PrepareRide())),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(255, 114, 94, 1),
+                      backgroundColor: Colors.blue[900]!,
                       padding: const EdgeInsets.all(20)),
                   child: Container(
                     width: MediaQuery.of(context).size.width * .4,

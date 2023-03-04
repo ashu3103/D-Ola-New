@@ -1,3 +1,4 @@
+import 'package:dola/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dola/utils/components.dart';
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: showpinner,
-        color: Color.fromRGBO(255, 114, 94, 1),
+        color: Colors.blue[900]!,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -102,7 +103,12 @@ class _LoginPageState extends State<LoginPage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Logged In!')),
                                 );
-                                Navigator.pushNamed(context, '/home');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Home(role:"Driver")),
+                                );
                               }
                             } catch (e) {
                               setState(() {
@@ -114,8 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           style: ButtonStyle(
                               backgroundColor:
-                                  const MaterialStatePropertyAll<Color>(
-                                Color.fromRGBO(255, 114, 94, 1),
+                                   MaterialStatePropertyAll<Color>(
+                                Colors.blue[900]!,
                               ),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
@@ -152,9 +158,9 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            child: const Text('Register',
+                            child:  Text('Register',
                                 style: TextStyle(
-                                    color: Color.fromRGBO(255, 114, 94, 1),
+                                    color: Colors.blue[900]!,
                                     fontWeight: FontWeight.bold)),
                           )
                         ],

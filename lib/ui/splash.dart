@@ -63,9 +63,9 @@ class _SplashState extends State<Splash> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+           Icon(
             CupertinoIcons.car_detailed,
-            color: Color.fromRGBO(255, 114, 94, 1),
+            color: Colors.blue[900]!,
             size: 120,
           ),
           Text(
@@ -73,7 +73,7 @@ class _SplashState extends State<Splash> {
             style: Theme.of(context)
                 .textTheme
                 .headlineLarge
-                ?.copyWith(color: Color.fromRGBO(255, 114, 94, 1), fontWeight: FontWeight.bold),
+                ?.copyWith(color: Colors.blue[900]!, fontWeight: FontWeight.bold),
           ),
         ],
       ),

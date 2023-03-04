@@ -30,7 +30,7 @@ Widget reviewRideBottomSheet(
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: Colors.indigo)),
+                        ?.copyWith(color: Colors.blue[900]!)),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(

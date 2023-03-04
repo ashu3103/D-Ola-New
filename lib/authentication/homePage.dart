@@ -1,3 +1,5 @@
+import 'package:dola/authentication/loginPage.dart';
+import 'package:dola/authentication/registerPage.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +35,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                
-                  Text("D'Ola", style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w900, color:  Color.fromRGBO(255, 114, 94, 1),)),
+                  Text("D'Ola", style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w900, color:  Colors.blue[900]!,)),
                   // Text('IFY', style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w900, color: Colors.black))
                 ],
               ),
@@ -45,11 +47,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   child: ElevatedButton(
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
-                 Navigator.pushNamed(context, '/login');
+             Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginPage()),
+                                );
                     },
                     style: ButtonStyle(
-                        backgroundColor: const MaterialStatePropertyAll<Color>(
-                            Color.fromRGBO(255, 114, 94, 1),),
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            Colors.blue[900]!,),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -72,13 +79,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Validate returns true if the form is valid, or false otherwise.
-                        Navigator.pushNamed(context, '/register');
-                 
+                      Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegistrationPage()),
+                                );
                     },
                     style: ButtonStyle(
-                        backgroundColor: const MaterialStatePropertyAll<Color>(
-                            Color.fromRGBO(255, 114, 94, 1),),
+                        backgroundColor: MaterialStatePropertyAll<Color>(
+                            Colors.blue[900]!,),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

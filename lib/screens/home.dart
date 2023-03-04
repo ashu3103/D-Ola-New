@@ -1,11 +1,15 @@
+import 'package:dola/screens/pastRides.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
 import 'package:dola/screens/prepare_ride.dart';
+import 'package:dola/screens/incomingRides.dart';
+import 'package:dola/authentication/homePage.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key,required this.role}) : super(key: key);
+  final String role;
 
   @override
   State<Home> createState() => _HomeState();
@@ -22,7 +26,10 @@ class _HomeState extends State<Home> {
     _initialCameraPosition = CameraPosition(target: currentLocation, zoom: 14);
     currentAddress = getCurrentAddressFromSharedPrefs();
     print("access");
+     print("rolee");
+    print(widget.role);
     print( dotenv.env['MAPBOX_ACCESS_TOKEN']);
+   
     
   }
   
@@ -47,7 +54,28 @@ class _HomeState extends State<Home> {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pushNamed(context, '/book_ride');
+              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PrepareRide()),
+                                );
+              },
+            ),
+            if(widget.role=="Driver")
+                   ListTile(
+               leading: Icon(Icons.local_taxi),
+              title: const Text('Incoming Rides'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+               Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const IncomingRides()),
+                                );
               },
             ),
             ListTile(
@@ -57,14 +85,24 @@ class _HomeState extends State<Home> {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pushNamed(context, '/past_rides');
+                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PastRides()),
+                                );
               },
             ),
               ListTile(
                leading: Icon(Icons.local_taxi),
               title: const Text('Logout'),
               onTap: () {
-               Navigator.pushNamed(context, '/');
+               Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomePage()),
+                                );
               },
             ),
           ]
@@ -97,13 +135,17 @@ class _HomeState extends State<Home> {
                       const SizedBox(height: 20),
                       const Text('You are currently here:'),
                       Text(currentAddress,
-                          style: const TextStyle(color: Color.fromRGBO(255, 114, 94, 1))),
+                          style: TextStyle(color: Colors.blue[900]!)),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(
-                              context,'/book_ride'),
+                          onPressed: () =>  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PrepareRide()),
+                                ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(255, 114, 94, 1),
+                            backgroundColor: Colors.blue[900]!,
                               padding: const EdgeInsets.all(20)),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dola/utils/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:dola/authentication/homePage.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        color: Color.fromRGBO(255, 114, 94, 1),
+        color: Colors.blue[900]!,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -150,7 +151,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   leading: Radio(
                                     value: "Rider",
                                     groupValue: role,
-                                    activeColor: Color.fromRGBO(255, 114, 94, 1),
+                                    activeColor: Colors.blue[900]!,
                                     onChanged: (value) {
                                       setState(() {
                                         role = value.toString();
@@ -164,7 +165,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   leading: Radio(
                                     value: "Driver",
                                     groupValue:role,
-                                    activeColor: Color.fromRGBO(255, 114, 94, 1),
+                                    activeColor: Colors.blue[900]!,
                                     onChanged: (value) {
                                       setState(() {
                                         role = value.toString();
@@ -235,7 +236,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                               content: Text(
                                                   'Registered Successfully!')),
                                         );
-                                        Navigator.pushNamed(context, '/');
+                                        Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          HomePage()),
+                                );
                                         setState(() {
                                           showSpinner = false;
                                         });
@@ -249,8 +255,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 },
                                 style: ButtonStyle(
                                     backgroundColor:
-                                        const MaterialStatePropertyAll<Color>(
-                                      Color.fromRGBO(255, 114, 94, 1),
+                                       MaterialStatePropertyAll<Color>(
+                                      Colors.blue[900]!,
                                     ),
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(

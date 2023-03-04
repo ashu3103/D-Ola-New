@@ -87,7 +87,7 @@ class _ReviewRideState extends State<ReviewRide> {
       "fills",
       "lines",
       LineLayerProperties(
-        lineColor: Colors.indigo.toHexStringRGB(),
+        lineColor: Colors.blue[900]!.toHexStringRGB(),
         lineCap: "round",
         lineJoin: "round",
         lineWidth: 3,
