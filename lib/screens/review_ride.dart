@@ -93,6 +93,8 @@ class _ReviewRideState extends State<ReviewRide> {
         lineWidth: 3,
       ),
     );
+    print("acces token");
+    print( dotenv.env['MAPBOX_ACCESS_TOKEN']);
   }
 
   @override

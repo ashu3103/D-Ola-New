@@ -4,17 +4,18 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
 import 'package:dola/screens/prepare_ride.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class RideStatus extends StatefulWidget {
+  const RideStatus({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<RideStatus> createState() => _RideStatusState();
 }
 
-class _HomeState extends State<Home> {
+class _RideStatusState extends State<RideStatus> {
   LatLng currentLocation = getCurrentLatLngFromSharedPrefs();
   late String currentAddress;
   late CameraPosition _initialCameraPosition;
+  bool isAccepted=false;
 
   @override
   void initState() {
@@ -30,16 +31,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Ride Status")),
         body: Stack(
       children: [
-        MapboxMap(
-          initialCameraPosition: _initialCameraPosition,
-          accessToken:dotenv.env['MAPBOX_ACCESS_TOKEN'],
-          myLocationEnabled: true,
-        ),
-        Positioned(
-          bottom: 0,
-          child: SizedBox(
+        // MapboxMap(
+        //   initialCameraPosition: _initialCameraPosition,
+        //   accessToken:dotenv.env['MAPBOX_ACCESS_TOKEN'],
+        //   myLocationEnabled: true,
+        // ),
+       SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Card(
               clipBehavior: Clip.antiAlias,
@@ -49,11 +49,17 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Row(children:[
+                        if(isAccepted)
+                        Icon(Icons.check_circle_outline_outlined,color:Colors.green),
+                        Icon(Icons.circle_outlined),
+                        SizedBox(width:10),
                       const Text(
-                        'Hi there!',
+                        'Looking for Cab',
                         style: TextStyle(
+                          color:Colors.grey,
                             fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      )]),
                       const SizedBox(height: 20),
                       const Text('You are currently here:'),
                       Text(currentAddress,
@@ -76,7 +82,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-        ),
       ],
     ));
   }
