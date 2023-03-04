@@ -1,3 +1,4 @@
+import 'package:dola/authentication/registerPage.dart';
 import 'package:dola/screens/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(  color:Colors.grey[700], fontSize:15,fontWeight: FontWeight.bold)),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, '/register');
+                            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegistrationPage()),
+                                );
                             },
                             child:  Text('Register',
                                 style: TextStyle(

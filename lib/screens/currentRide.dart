@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
-import 'package:dola/screens/currentRide.dart';
-class IncomingRides extends StatefulWidget {
-  const IncomingRides({Key? key}) : super(key: key);
 
+class CurrentRide extends StatefulWidget {
+  const CurrentRide({Key? key, required this.riderAdd,required this.destination}) : super(key: key);
+  final String riderAdd;
+  final String destination;
   @override
-  State<IncomingRides> createState() => _IncomingRidesState();
+  State<CurrentRide> createState() => _CurrentRideState();
 }
 
-class _IncomingRidesState extends State<IncomingRides> {
+class _CurrentRideState extends State<CurrentRide> {
   String source = "Delhi";
   String destination = "Mumbai";
   String fare = "100";
@@ -23,54 +24,33 @@ class _IncomingRidesState extends State<IncomingRides> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Your Past Rides")),
+      appBar: AppBar(title: Text("Current Ride")),
       body: SingleChildScrollView(
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-            for (var i = 0; i < 10; i++)
               Padding(
                   padding: EdgeInsets.only(left:17,right:17,top:15),
                   child: Container(
+                    width: MediaQuery.of(context).size.width*.8,
                       padding: EdgeInsets.all(20),
                       // height: 100,
                       decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 203, 203, 203),
+                          color: Color.fromARGB(255, 110, 135, 194),
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         children:[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text("Source:$source",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Fare:$fare",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                            ],
-                          ),
-                          
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text("Destination:$destination",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Date:$date",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                            ],
-                          ),
-                       
-                        ],
-                      ),
+                    
+                              Text("Source:$source",style:TextStyle(fontSize: 15,fontWeight: FontWeight.w600)),
+                              Text("Fare:",style:TextStyle(fontSize: 15,fontWeight: FontWeight.w600)),
+                              Text("Destination:$destination",style:TextStyle(fontSize: 15,fontWeight: FontWeight.w600)),
+                         
                         Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () async {
-                            Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CurrentRide(riderAdd:"Delhi",destination:"Mumbai")),
-                                );
+                          
                           },
                           style: ButtonStyle(
                               backgroundColor:
