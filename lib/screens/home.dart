@@ -30,6 +30,46 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:  AppBar(
+        title:  Text("D'Ola")
+      ),
+      drawer:  Drawer(
+        child:ListView(
+          children:<Widget>[
+             UserAccountsDrawerHeader(accountName:  Text("rijul"), accountEmail: new Text("rijul@gmail.com"),
+            currentAccountPicture:  CircleAvatar(
+              backgroundImage: NetworkImage('https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-default-avatar-profile-icon-vector-social-media-user-image-vector-illustration-227787227.jpg'),
+            ),),
+            ListTile(
+              leading: Icon(Icons.local_taxi),
+              title: const Text('Book Ride'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pushNamed(context, '/book_ride');
+              },
+            ),
+            ListTile(
+               leading: Icon(Icons.local_taxi),
+              title: const Text('Past Rides'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pushNamed(context, '/past_rides');
+              },
+            ),
+              ListTile(
+               leading: Icon(Icons.local_taxi),
+              title: const Text('Logout'),
+              onTap: () {
+               Navigator.pushNamed(context, '/');
+              },
+            ),
+          ]
+        )
+      ) ,
         body: Stack(
       children: [
         MapboxMap(
@@ -60,10 +100,8 @@ class _HomeState extends State<Home> {
                           style: const TextStyle(color: Color.fromRGBO(255, 114, 94, 1))),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const PrepareRide())),
+                          onPressed: () => Navigator.pushNamed(
+                              context,'/book_ride'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromRGBO(255, 114, 94, 1),
                               padding: const EdgeInsets.all(20)),

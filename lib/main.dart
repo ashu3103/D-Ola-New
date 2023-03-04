@@ -1,3 +1,4 @@
+import 'package:dola/screens/pastRides.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +9,7 @@ import 'authentication/homePage.dart';
 import 'authentication/loginPage.dart';
 import 'authentication/registerPage.dart';
 import 'screens/home.dart';
+import 'screens/prepare_ride.dart';
 import 'ui/splash.dart';
 
 late SharedPreferences sharedPreferences;
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
         '/login' : (context) => const LoginPage(),
         '/register' : (context) =>const RegistrationPage(),
         '/home' : (context) =>const Home(),
+        '/book_ride' : (context) =>const PrepareRide(),
+        '/past_rides' : (context) =>const PastRides(),
       },
         );
   }
