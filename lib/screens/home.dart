@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                       const SizedBox(height: 20),
                       const Text('You are currently here:'),
                       Text(currentAddress,
-                          style: const TextStyle(color: Colors.indigo)),
+                          style: const TextStyle(color: Color.fromRGBO(255, 114, 94, 1))),
                       const SizedBox(height: 20),
                       ElevatedButton(
                           onPressed: () => Navigator.push(
@@ -61,6 +61,7 @@ class _HomeState extends State<Home> {
                               MaterialPageRoute(
                                   builder: (_) => const PrepareRide())),
                           style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromRGBO(255, 114, 94, 1),
                               padding: const EdgeInsets.all(20)),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
