@@ -476,11 +476,6 @@
 				"internalType": "string",
 				"name": "_email",
 				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
 			}
 		],
 		"name": "getUserRides",
@@ -538,9 +533,9 @@
 						"type": "bool"
 					}
 				],
-				"internalType": "struct Dola.Ride",
+				"internalType": "struct Dola.Ride[]",
 				"name": "",
-				"type": "tuple"
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

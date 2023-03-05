@@ -31,29 +31,40 @@ class _PastRidesState extends State<PastRides> {
               children: [
             for (var i = 0; i < 10; i++)
               Padding(
-                  padding: EdgeInsets.only(left:17,right:17,top:15),
+                  padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*.12,right:MediaQuery.of(context).size.width*.12,top:15),
                   child: Container(
                       padding: EdgeInsets.all(20),
                       height: 100,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 203, 203, 203),
-                          borderRadius: BorderRadius.circular(15)),
+                         decoration: BoxDecoration(
+                        boxShadow: const [
+                           BoxShadow(
+                            color: Color.fromARGB(255, 154, 152, 152),
+                            offset: const Offset(
+                        1.0,
+                        1.0,
+                      ),
+                      blurRadius: 1.0,
+                      spreadRadius: 1.0,
+                          )
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text("Source:$source",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Fare:$fare",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Source: $source",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Fare: $fare",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
                             ],
                           ),
                           
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text("Destination:$destination",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Date:$date",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Destination: $destination",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Date: $date",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
                             ],
                           ),
                          

@@ -98,8 +98,10 @@ Future<List> getRideStatus(String riderEmail, Web3Client ethClient) async {
   return result;
 }
 
-Future<List> getUserRides (String userEmail, Web3Client ethClient) async {
+Future<List> getUserRides(String userEmail, Web3Client ethClient) async {
+  print("LAst rides from backend");
   List<dynamic> result =  await ask('getUserRides', [userEmail], ethClient);
+  
   print(result);
   return result;
 }

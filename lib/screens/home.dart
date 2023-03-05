@@ -14,7 +14,12 @@ import 'package:dola/services/functions.dart';
 
 class Home extends StatefulWidget {
   final Web3Client ethClient;
-  const Home({Key? key, required this.role, required this.ethClient, required this.name, required this.email})
+  const Home(
+      {Key? key,
+      required this.role,
+      required this.ethClient,
+      required this.name,
+      required this.email})
       : super(key: key);
   final String role;
   final String name;
@@ -123,9 +128,13 @@ class _HomeState extends State<Home> {
           ListTile(
             leading: Icon(Icons.local_taxi),
             title: const Text('Past Rides'),
-            onTap: () {
+            onTap: () async {
               // Update the state of the app
               // ...
+              // dynamic pastRides = await getUserRides(widget.email, widget.ethClient);
+              // // pastRides = pastRides[0];
+              // print("Past rides");
+              // print(pastRides);
               // Then close the drawer
               Navigator.push(
                 context,
