@@ -14,9 +14,11 @@ import 'package:dola/services/functions.dart';
 
 class Home extends StatefulWidget {
   final Web3Client ethClient;
-  const Home({Key? key, required this.role, required this.ethClient})
+  const Home({Key? key, required this.role, required this.ethClient, required this.name, required this.email})
       : super(key: key);
   final String role;
+  final String name;
+  final String email;
 
   @override
   State<Home> createState() => _HomeState();
@@ -45,29 +47,30 @@ class _HomeState extends State<Home> {
         drawer: Drawer(
             child: ListView(children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("rijul"),
-            accountEmail: new Text("rijul@gmail.com"),
+            accountName: Text(widget.name),
+            accountEmail: new Text(widget.email),
             currentAccountPicture: CircleAvatar(
               backgroundImage: NetworkImage(
                   'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-default-avatar-profile-icon-vector-social-media-user-image-vector-illustration-227787227.jpg'),
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.local_taxi),
-            title: const Text('Book Ride'),
-            onTap: () {
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PrepareRide(
-                          ethClient: widget.ethClient,
-                        )),
-              );
-            },
-          ),
+          if (widget.role == "Rider")
+            ListTile(
+              leading: Icon(Icons.local_taxi),
+              title: const Text('Book Ride'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrepareRide(
+                            ethClient: widget.ethClient,
+                          )),
+                );
+              },
+            ),
           ListTile(
             leading: Icon(Icons.local_taxi),
             title: const Text('Ongoing Ride'),
@@ -76,12 +79,19 @@ class _HomeState extends State<Home> {
               // ...
               final FirebaseAuth auth = FirebaseAuth.instance;
               dynamic email = auth.currentUser!.email;
-              dynamic ongoingRideData = await getOngoingRide(email, widget.ethClient);
+              dynamic ongoingRideData =
+                  await getOngoingRide(email, widget.ethClient);
               // Then close the drawer
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => widget.role =="Rider"? RideStatus(ethClient: widget.ethClient) : CurrentRide(fare: ongoingRideData[0][2].toString(), riderAdd: ongoingRideData[0][0], destination: ongoingRideData[0][1], ethClient: widget.ethClient)),
+                    builder: (context) => widget.role == "Rider"
+                        ? RideStatus(ethClient: widget.ethClient)
+                        : CurrentRide(
+                            fare: ongoingRideData[0][2].toString(),
+                            riderAdd: ongoingRideData[0][0],
+                            destination: ongoingRideData[0][1],
+                            ethClient: widget.ethClient)),
               );
             },
           ),
@@ -97,15 +107,16 @@ class _HomeState extends State<Home> {
                 dynamic l = await getDriver(email, widget.ethClient);
                 await updateAllCurrentRideRequests(l[0][6], widget.ethClient);
                 print("Updated!!");
-                dynamic list = await getAllCurrentRideRequests(widget.ethClient);
+                dynamic list =
+                    await getAllCurrentRideRequests(widget.ethClient);
                 print("Incoming Print");
                 list = list[0];
                 // Then close the drawer
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          IncomingRides(list: list, ethClient: widget.ethClient)),
+                      builder: (context) => IncomingRides(
+                          list: list, ethClient: widget.ethClient)),
                 );
               },
             ),

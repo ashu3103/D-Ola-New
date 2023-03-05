@@ -6,6 +6,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:dola/screens/home.dart';
 import 'package:dola/services/functions.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:dola/authentication/homePage.dart';
 
 class RegistrationPage extends StatefulWidget {
   final Web3Client ethClient;
@@ -277,7 +278,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => Home(role: role, ethClient: widget.ethClient)),
+                                              builder: (context) => const HomePage()),
                                         );
                                         setState(() {
                                           showSpinner = false;

@@ -80,7 +80,8 @@ class _CurrentRideState extends State<CurrentRide> {
                         children: [
                         if (pickedUp)
                           Icon(Icons.check_circle_outline_outlined,
-                              color: Colors.green),
+                              color: Colors.green,size:25),
+                              SizedBox(width:10),
                         Container(
                           alignment: Alignment.center,
                           //  width: MediaQuery.of(context).size.width * .8,
@@ -108,7 +109,13 @@ class _CurrentRideState extends State<CurrentRide> {
                             child: Container(
                                 padding: const EdgeInsets.all(12),
                                 // width: MediaQuery.of(context).size.width * 0.,
-                                child: Text(
+                                child: !pickedUp?Text(
+                                  'Pick Up',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                  textAlign: TextAlign.center,
+                                ):Text(
                                   'Picked Up',
                                   style: TextStyle(
                                       fontSize: 12,

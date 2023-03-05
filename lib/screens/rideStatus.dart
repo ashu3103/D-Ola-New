@@ -126,11 +126,11 @@ class _RideStatusState extends State<RideStatus> {
                                 fontWeight: FontWeight.bold),
                           )
                         ])),
-                        Container(
-                            padding: EdgeInsets.only(left: 10),
-                            height: 80,
-                            child:
-                                VerticalDivider(width: 2, color: Colors.grey)),
+                        // Container(
+                        //     padding: EdgeInsets.only(left: 10),
+                        //     height: 80,
+                        //     child:
+                        //         VerticalDivider(width: 2, color: Colors.grey)),
                         // IntrinsicHeight(
                         //     child: Row(children: [
                         //   if (completed)

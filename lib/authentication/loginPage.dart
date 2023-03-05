@@ -6,6 +6,7 @@ import 'package:dola/utils/components.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:dola/services/functions.dart';
 
 class LoginPage extends StatefulWidget {
   final Web3Client ethClient;
@@ -17,8 +18,10 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool loginObscure = true;
+  dynamic name ;
   String username = '';
   String password = '';
+  String role='Rider';
   // FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   bool showpinner = false;
@@ -91,15 +94,23 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
                           onPressed: () async {
+                            dynamic tempRole = await getUserType(username, widget.ethClient);
+                            dynamic detailsList=tempRole[0]=="Rider"? await getRider(username, widget.ethClient):await getDriver(username, widget.ethClient);
                             setState(() {
                               showpinner = true;
+                              role = tempRole[0];
+                            name=  role=="Rider"?detailsList[0][0]:detailsList[0][1];
                             });
+                            
                             try {
                               final user =
                                   await auth.signInWithEmailAndPassword(
                                       email: username, password: password);
+                                      print(user.user);
+                                      
                               if (user != null) {
                                 setState(() {
+                                  // email=user.user;
                                   showpinner = false;
                                   invalidCredentials = false;
                                 });
@@ -110,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          Home(role:"Rider", ethClient: widget.ethClient)),
+                                          Home(role:role, ethClient: widget.ethClient,name:name,email:username)),
                                 );
                               }
                             } catch (e) {

@@ -121,3 +121,9 @@ Future<List> getOngoingRide (String email, Web3Client ethClient) async {
   print(result);
   return result;
 }
+
+Future<List> getUserType (String email, Web3Client ethClient) async {
+  List<dynamic> result =  await ask('getUserType', [email], ethClient);
+  print(result);
+  return result;
+}
