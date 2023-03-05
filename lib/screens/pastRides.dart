@@ -4,8 +4,8 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:dola/helpers/shared_prefs.dart';
 
 class PastRides extends StatefulWidget {
-  const PastRides({Key? key}) : super(key: key);
-
+  const PastRides({Key? key, required this.rides}) : super(key: key);
+  final List<dynamic>rides;
   @override
   State<PastRides> createState() => _PastRidesState();
 }
@@ -29,7 +29,7 @@ class _PastRidesState extends State<PastRides> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-            for (var i = 0; i < 10; i++)
+                for(int i=0; i<widget.rides.length; i++)
               Padding(
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width*.12,right:MediaQuery.of(context).size.width*.12,top:15),
                   child: Container(
@@ -55,16 +55,16 @@ class _PastRidesState extends State<PastRides> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text("Source: $source",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Fare: $fare",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Source: ${widget.rides[i][0]}",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Fare: ${widget.rides[i][2]}",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
                             ],
                           ),
                           
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text("Destination: $destination",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
-                              Text("Date: $date",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Destination: ${widget.rides[i][1]}",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
+                              Text("Date: ${widget.rides[i][4]}",style:TextStyle(fontSize: 12,fontWeight: FontWeight.w600)),
                             ],
                           ),
                          

@@ -7,7 +7,7 @@ import 'package:dola/helpers/shared_prefs.dart';
 import 'package:dola/screens/prepare_ride.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:dola/services/functions.dart';
-
+import 'package:dola/ui/rate_ride.dart';
 class RideStatus extends StatefulWidget {
   final Web3Client ethClient;
   const RideStatus({Key? key, required this.ethClient}) : super(key: key);
@@ -161,7 +161,7 @@ class _RideStatusState extends State<RideStatus> {
                       print(_ride[0][2].runtimeType);
                       await payFare(riderEmail, _rider[0][4], _ride[0][2], widget.ethClient);
                       Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => PrepareRide(ethClient: widget.ethClient)));
+                      MaterialPageRoute(builder: (_) => RateRide(ethClient:widget.ethClient)));
                     } : null,
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[900]!,

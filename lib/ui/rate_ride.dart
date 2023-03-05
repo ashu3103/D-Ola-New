@@ -12,7 +12,9 @@ class RateRide extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text('Rate your ride', style: Theme.of(context).textTheme.titleLarge),
+      Text('Payment Done', style: Theme.of(context).textTheme.titleLarge),
+      Icon(Icons.check_circle_outline_outlined,size:30,color:Colors.green),
+       Text('Rate your Ride', style: Theme.of(context).textTheme.titleLarge),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Center(

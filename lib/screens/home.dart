@@ -33,6 +33,8 @@ class _HomeState extends State<Home> {
   LatLng currentLocation = getCurrentLatLngFromSharedPrefs();
   late String currentAddress;
   late CameraPosition _initialCameraPosition;
+  List<dynamic> ? pastRides;
+  dynamic list1;
 
   @override
   void initState() {
@@ -109,19 +111,19 @@ class _HomeState extends State<Home> {
                 // ...
                 final FirebaseAuth auth = FirebaseAuth.instance;
                 dynamic email = auth.currentUser!.email;
-                dynamic l = await getDriver(email, widget.ethClient);
-                await updateAllCurrentRideRequests(l[0][6], widget.ethClient);
+                dynamic driver = await getDriver(email, widget.ethClient);
+                await updateAllCurrentRideRequests(driver[0][6], widget.ethClient);
                 print("Updated!!");
-                dynamic list =
+                dynamic incomingRides_tuple =
                     await getAllCurrentRideRequests(widget.ethClient);
                 print("Incoming Print");
-                list = list[0];
+                List<dynamic> incomingRides =  incomingRides_tuple[0];
                 // Then close the drawer
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => IncomingRides(
-                          list: list, ethClient: widget.ethClient)),
+                          incomingRides: incomingRides, ethClient: widget.ethClient, email: email, pvtKey: driver[0][6])),
                 );
               },
             ),
@@ -131,14 +133,16 @@ class _HomeState extends State<Home> {
             onTap: () async {
               // Update the state of the app
               // ...
-              // dynamic pastRides = await getUserRides(widget.email, widget.ethClient);
-              // // pastRides = pastRides[0];
-              // print("Past rides");
-              // print(pastRides);
+              dynamic pastRides_list = await getUserRides(widget.email, widget.ethClient);
+              pastRides = pastRides_list[0];
+
+              // pastRides = pastRides[0];
+              print("Past rides");
+              print(pastRides);
               // Then close the drawer
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PastRides()),
+                MaterialPageRoute(builder: (context) => PastRides(rides:pastRides!)),
               );
             },
           ),

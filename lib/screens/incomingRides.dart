@@ -9,23 +9,23 @@ import 'package:web3dart/web3dart.dart';
 
 class IncomingRides extends StatefulWidget {
   final Web3Client ethClient;
-  final dynamic list;
-  const IncomingRides({Key? key, required this.list, required this.ethClient}) : super(key: key);
+  final List<dynamic> incomingRides;
+  final email;
+  final pvtKey;
+  const IncomingRides({Key? key, required this.incomingRides, required this.ethClient, required this.email, required this.pvtKey}) : super(key: key);
 
   @override
   State<IncomingRides> createState() => _IncomingRidesState();
 }
 
 class _IncomingRidesState extends State<IncomingRides> {
-  String source = "Delhi";
-  String destination = "Mumbai";
-  String fare = "100";
-  String date = "1/1/23";
+  // String source = "Delhi";
+  // String destination = "Mumbai";
+  // String fare = "100";
+  // String date = "1/1/23";
   String rideReq = "Accept Ride Request";
   bool isDisabled = false;
-  dynamic list = [];
-  dynamic email;
-  dynamic l;
+  List<dynamic> refreshedRideShow = [];
 
   @override
   Widget build(BuildContext context) {
@@ -33,29 +33,23 @@ class _IncomingRidesState extends State<IncomingRides> {
       appBar: AppBar(
       title: Text("Incoming Rides"),
       actions: [
-        IconButton(onPressed: ()async{
-          final FirebaseAuth auth = FirebaseAuth.instance;
-          email = auth.currentUser!.email;
-          l = await getDriver(email, widget.ethClient);
-          await updateAllCurrentRideRequests(l[0][6], widget.ethClient);
-          print("Updated!!");
-          list = await getAllCurrentRideRequests(widget.ethClient);
-          print("Incoming Print");
-          setState(() {
-            list = list[0];
-          });
-          print(list);
-        }, icon: Icon(Icons.refresh))
-      ],),
+        IconButton(
+          onPressed: () async {
+            dynamic refreshedIncomingRides_tuple = await getAllCurrentRideRequests(widget.ethClient);
+            setState(() {
+              refreshedRideShow = refreshedIncomingRides_tuple[0];
+            });
+            
+        }, 
+        icon: Icon(Icons.refresh))
+      ],
+      ),
       body: SingleChildScrollView(
-        // child: FutureBuilder(
-        //   future: ,
-        // ),
-        child: Column(
+        child: refreshedRideShow.length == 0 ? Center(child:CircularProgressIndicator()) : Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (var i = 0; i < list.length; i++)
+            for (var i = 0; i < refreshedRideShow.length; i++)
               Padding(
                   padding: EdgeInsets.only(left: 17, right: 17, top: 15),
                   child: Container(
@@ -71,11 +65,11 @@ class _IncomingRidesState extends State<IncomingRides> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("Source:${list[i][0]}",
+                                Text("Source:${refreshedRideShow[i][0]}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600)),
-                                Text("Fare:${list[i][2]}",
+                                Text("Fare:${refreshedRideShow[i][2]}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600)),
@@ -84,11 +78,11 @@ class _IncomingRidesState extends State<IncomingRides> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text("Destination:${list[i][1]}",
+                                Text("Destination:${refreshedRideShow[i][1]}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600)),
-                                Text("Date:${list[i][4]}",
+                                Text("Date:${refreshedRideShow[i][4]}",
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600)),
@@ -109,15 +103,17 @@ class _IncomingRidesState extends State<IncomingRides> {
                                         rideReq = "Ride Accepted";
                                         isDisabled = true;
                                       }),
-                                      await acceptIncomingRide(email, list[i][5], l[0][6], widget.ethClient),
+                                      
+
+                                      await acceptIncomingRide(widget.email, widget.incomingRides[i][5], widget.pvtKey, widget.ethClient),
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CurrentRide(
-                                                    fare: list[i][2].toString(),
-                                                    riderAdd: list[i][0],
-                                                    destination: list[i][1], ethClient: widget.ethClient)),
+                                                    fare: widget.incomingRides[i][2].toString(),
+                                                    riderAdd: widget.incomingRides[i][0],
+                                                    destination: widget.incomingRides[i][1], ethClient: widget.ethClient)),
                                       )
                                     };
                             },
