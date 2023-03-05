@@ -84,9 +84,9 @@ Future<String> pickUp (String driverEmail, String pvtKey, Web3Client ethClient) 
   return response;
 }
 
-Future<String> payFare (String riderEmail, String pvtKey, int _fare, Web3Client ethClient) async {
+Future<String> payFare (String riderEmail, String pvtKey, BigInt _fare, Web3Client ethClient) async {
 
-  var response = await callFunction('payFare', [riderEmail], ethClient, pvtKey, BigInt.from(_fare + 1));
+  var response = await callFunction('payFare', [riderEmail], ethClient, pvtKey, _fare);
   print('Payment ended successfully');
   return response;
 }
